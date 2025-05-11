@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>혼모노(Honmono) - 서브컬처 애호가들의 진정성 있는 공간</title>
+  <style>
+    :root {
+      --primary: #6A3DE8;
+      --primary-dark: #5428D0;
+      --secondary: #FF4081;
+      --background: #F8F9FA;
+      --dark-bg: #222222;
+      --light-text: #FFFFFF;
+      --dark-text: #333333;
+      --card-bg: #FFFFFF;
+      --border-color: #E0E0E0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    
+    body {
+      background-color: var(--background);
+      color: var(--dark-text);
+      line-height: 1.6;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 0;
+    }
+    
+    /* 헤더 스타일 */
+    header {
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo span {
+      color: var(--secondary);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+      position: relative;
+    }
+    
+    nav ul li a {
+      color: var(--light-text);
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 검색창 */
+    .search-container {
+      background-color: var(--primary);
+      padding: 30px 0;
+      text-align: center;
+      color: var(--light-text);
+    }
+    
+    .search-box {
+      position: relative;
+      max-width: 600px;
+      margin: 20px auto 0;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .search-btn {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .keywords {
+      display: none;
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .keyword-badge {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: var(--light-text);
+      padding: 5px 12px;
+      margin: 5px;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+    }
+    
+    .keyword-badge:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* 실시간 키워드 트렌드 */
+    .search-input:focus ~ .keywords {
+      display: block;
+    }
+    
+    /* 섹션 공통 스타일 */
+    section {
+      margin: 30px 0;
+      padding: 20px 0;
+    }
+    
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--primary-dark);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .view-more {
+      font-size: 14px;
+      color: var(--primary);
+    }
+    
+    /* 인기 게시물 */
+    .popular-posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    
+    .post-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .post-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .post-image {
+      height: 180px;
+      background-position: center;
+      background-size: cover;
+      background-color: #ddd;
+    }
+    
+    .post-content {
+      padding: 15px;
+    }
+    
+    .post-category {
+      font-size: 12px;
+      color: var(--primary);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    
+    .post-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .post-meta {
+      font-size: 12px;
+      color: #777;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    /* 분기 애니메이션 섹션 */
+    .anime-filter {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+    }
+    
+    .filter-btn {
+      padding: 8px 16px;
+      background-color: #eee;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.3s;
+    }
+    
+    .filter-btn.active {
+      background-color: var(--primary);
+      color: white;
+    }
+    
+    .anime-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    /* 커뮤니티 이미지 */
+    .community-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+    }
+    
+    .image-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+    }
+    
+    .image-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    
+    .image-item:hover img {
+      transform: scale(1.05);
+    }
+    
+    .image-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      color: white;
+      padding: 10px;
+      font-size: 12px;
+    }
+    
+    /* 커뮤니티 활동 피드 */
+    .activity-feed {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+    }
+    
+    .feed-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .feed-item:last-child {
+      border-bottom: none;
+    }
+    
+    .feed-title {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    
+    .feed-meta {
+      font-size: 12px;
+      color: #777;
+    }
+    
+    /* 행사 캘린더 */
+    .event-calendar {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+    }
+    
+    .event-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .event-item:last-child {
+      border-bottom: none;
+    }
+    
+    .event-date {
+      background-color: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+    
+    .event-day {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    
+    .event-month {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    
+    .event-info {
+      flex: 1;
+    }
+    
+    .event-title {
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+    
+    .event-location {
+      font-size: 12px;
+      color: #777;
+    }
+    
+    /* 푸터 */
+    footer {
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      padding: 40px 0;
+      margin-top: 50px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+    }
+    
+    .footer-section h3 {
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+    
+    .footer-section ul {
+      list-style: none;
+    }
+    
+    .footer-section ul li {
+      margin-bottom: 8px;
+    }
+    
+    .footer-section ul li a {
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+    
+    .footer-section ul li a:hover {
+      opacity: 1;
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      opacity: 0.6;
+    }
+    
+    /* 그리드 레이아웃 */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+    }
+    
+    /* 반응형 설계 */
+    @media (max-width: 768px) {
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .popular-posts,
+      .anime-list,
+      .community-images {
+        grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+      }
+      
+      .header-container {
+        flex-direction: column;
+      }
+      
+      nav ul {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      nav ul li {
+        margin: 5px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- 헤더 -->
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <a href="#">HONMONO<span>.</span></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">애니메이션</a></li>
+          <li><a href="#">건담</a></li>
+          <li><a href="#">VRChat</a></li>
+          <li><a href="#">일본여행</a></li>
+          <li><a href="#">행사정보</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- 검색창 -->
+  <div class="search-container">
+    <div class="container">
+      <h1>어떤 퀄리티든 존중받을 수 있는 공간</h1>
+      <p>덕질을 진심으로 존중하는 커뮤니티, HONMONO입니다</p>
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="관심있는 키워드를 검색해보세요">
+        <button class="search-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+        <div class="keywords">
+          <span class="keyword-badge">짱구는못말려</span>
+          <span class="keyword-badge">스파이패밀리</span>
+          <span class="keyword-badge">원피스</span>
+          <span class="keyword-badge">건담시드</span>
+          <span class="keyword-badge">에반게리온</span>
+          <span class="keyword-badge">VRC아바타</span>
+          <span class="keyword-badge">코믹월드</span>
+          <span class="keyword-badge">선데이GX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+    <!-- 인기 게시물 -->
+    <section>
+      <div class="section-title">
+        인기 게시물
+        <a href="#" class="view-more">더보기</a>
+      </div>
+      <div class="popular-posts">
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <div class="post-category">애니메이션</div>
+            <h3 class="post-title">2025년 봄 애니 중 꼭 봐야할 작품 TOP5</h3>
+            <div class="post-meta">
+              <span>조회 312</span>
+              <span>댓글 47</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <div class="post-category">건담</div>
+            <h3 class="post-title">RG 유니콘 건담 퍼펙티빌리티 개조기</h3>
+            <div class="post-meta">
+              <span>조회 284</span>
+              <span>댓글 35</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <div class="post-category">VRChat</div>
+            <h3 class="post-title">VRC 신규 아바타 시스템 가이드 2025</h3>
+            <div class="post-meta">
+              <span>조회 227</span>
+              <span>댓글 29</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 분기 애니메이션 섹션 -->
+    <section>
+      <div class="section-title">
+        분기별 애니메이션
+        <a href="#" class="view-more">더보기</a>
+      </div>
+      <div class="anime-filter">
+        <button class="filter-btn active">2025년 2분기</button>
+        <button class="filter-btn">2025년 1분기</button>
+        <button class="filter-btn">2024년 4분기</button>
+        <button class="filter-btn">2024년 3분기</button>
+        <button class="filter-btn">전체보기</button>
+      </div>
+      <div class="anime-list">
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <h3 class="post-title">하이큐!! 최종시즌</h3>
+            <div class="post-meta">
+              <span>Production I.G</span>
+              <span>금요일 방영</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <h3 class="post-title">소드 아트 온라인: 유니탈 링</h3>
+            <div class="post-meta">
+              <span>A-1 Pictures</span>
+              <span>수요일 방영</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <h3 class="post-title">체인소 맨 2부</h3>
+            <div class="post-meta">
+              <span>MAPPA</span>
+              <span>토요일 방영</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-content">
+            <h3 class="post-title">원피스 리마스터</h3>
+            <div class="post-meta">
+              <span>Toei Animation</span>
+              <span>일요일 방영</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="grid-layout">
+      <div>
+        <!-- 커뮤니티 최신 이미지 업로드 -->
+        <section>
+          <div class="section-title">
+            최신 업로드 이미지
+            <a href="#" class="view-more">더보기</a>
+          </div>
+          <div class="community-images">
+            <div class="image-item">
+              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <div class="image-info">건담 # RX-78-2</div>
+            </div>
+            <div class="image-item">
+              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <div class="image-info">애니 # 하이큐</div>
+            </div>
+            <div class="image-item">
+              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <div class="image-info">VRC # 아바타</div>
+            </div>
+            <div class="image-item">
+              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <div class="image-info">건담 # 프리덤</div>
+            </div>
+            <div class="image-item">
+              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <div class="image-info">애니 # 스파이패밀리</div>
+            </div>
+            <div class="image-item">
+              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <div class="image-info">VRC # 월드</div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- 커뮤니티 활동 피드 -->
+        <section>
+          <div class="section-title">
+            커뮤니티 활동
+            <a href="#" class="view-more">더보기</a>
+          </div>
+          <div class="activity-feed">
+            <div class="feed-item">
+              <div class="feed-title">애니메이션 OST 모음 - 2024년 1분기 인기곡</div>
+              <div class="feed-meta">
+                <span>오타쿠매니아</span>
+                <span>·</span>
+                <span>10분 전</span>
+              </div>
+            </div>
+            <div class="feed-item">
+              <div class="feed-title">건담 HGUC 뉴건담 개봉기 및 간단 리뷰</div>
+              <div class="feed-meta">
+                <span>건담러버</span>
+                <span>·</span>
+                <span>43분 전</span>
+              </div>
+            </div>
+            <div class="feed-item">
+              <div class="feed-title">VRChat 아바타 제작 중 문제 해결 방법 질문</div>
+              <div class="feed-meta">
+                <span>VRC초보</span>
+                <span>·</span>
+                <span>1시간 전</span>
+              </div>
+            </div>
+            <div class="feed-item">
+              <div class="feed-title">6월 도쿄 여행 시 애니메이션 관련 행사 정보</div>
+              <div class="feed-meta">
+                <span>여행좋아</span>
+                <span>·</span>
+                <span>2시간 전</span>
+              </div>
+            </div>
+            <div class="feed-item">
+              <div class="feed-title">신작 애니메이션 '바쿠만 리마스터' 1화 감상문</div>
+              <div class="feed-meta">
+                <span>애니감상러</span>
+                <span>·</span>
+                <span>3시간 전</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- 서브컬쳐 행사 캘린더 -->
+      <aside>
+        <section>
+          <div class="section-title">
+            서브컬쳐 행사 일정
+            <a href="#" class="view-more">달력보기</a>
+          </div>
+          <div class="event-calendar">
+            <div class="event-item">
+              <div class="event-date">
+                <div class="event-day">15</div>
+                <div class="event-month">5월</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">서울 코믹월드</div>
+                <div class="event-location">COEX D홀</div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="event-day">22</div>
+                <div class="event-month">5월</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">건담베이스 신상품 발매일</div>
+                <div class="event-location">전국 건담베이스</div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="event-day">5</div>
+                <div class="event-month">6월</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">Anime Expo 2024</div>
+                <div class="event-location">도쿄 빅사이트</div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="event-day">12</div>
+                <div class="event-month">6월</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">VRChat 크리에이터 밋업</div>
+                <div class="event-location">온라인 이벤트</div>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date">
+                <div class="event-day">25</div>
+                <div class="event-month">6월</div>
+              </div>
+              <div class="event-info">
+                <div class="event-title">애니송 콘서트</div>
+                <div class="event-location">서울 올림픽홀</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </div>
+  
+  <!-- 푸터 -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>혼모노</h3>
+          <p>어떤 퀄리티든 존중받을 수 있는 공간<br>서브컬처 애호가들의 진정한 커뮤니티</p>
+        </div>
+        <div class="footer-section">
+          <h3>카테고리</h3>
+          <ul>
+            <li><a href="#">애니메이션</a></li>
+            <li><a href="#">건담</a></li>
+            <li><a href="#">VRChat</a></li>
+            <li><a href="#">일본여행</a></li>
+            <li><a href="#">행사정보</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>정보</h3>
+          <ul>
+            <li><a href="#">서비스 소개</a></li>
+            <li><a href="#">이용약관</a></li>
+            <li><a href="#">개인정보처리방침</a></li>
+            <li><a href="#">문의하기</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 HONMONO. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
