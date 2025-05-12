@@ -20,7 +20,6 @@
       --border-color: #EEEEEE;
       --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
       --hover-bg: #F5F5F5; /* 호버 배경색 */
-font-size: 16px;
     }
     
     * {
@@ -30,27 +29,25 @@ font-size: 16px;
       font-family: 'Noto Sans KR', sans-serif;
     }
     
-body {
-  background-color: var(--background);
-  color: var(--dark-text);
-  line-height: 1.6;
-  font-size: 14px;
-  min-height: 100vh;
-  min-width: 320px; /* 최소 너비 추가 */
-}
+    body {
+      background-color: var(--background);
+      color: var(--dark-text);
+      line-height: 1.6;
+      font-size: 14px;
+      min-height: 100vh; /* 최소 높이를 화면 높이로 설정 */
+    }
     
     a {
       text-decoration: none;
       color: inherit;
     }
     
-.container {
-  width: 90%;
-  max-width: 1080px; /* 두 페이지 모두 동일한 최대 너비 */
-  margin: 0 auto;
-  padding: 0;
-  box-sizing: border-box; /* 추가: 패딩을 너비에 포함 */
-}
+    .container {
+      width: 95%;
+      max-width: 1080px; /* 최대 너비를 1080px로 제한 */
+      margin: 0 auto;
+      padding: 0;
+    }
     
     /* 애니메이션 정의 */
     @keyframes fadeIn {
@@ -58,7 +55,21 @@ body {
       to { opacity: 1; transform: translateY(0); }
     }
     
-    /* 텍스트에 빛이 지나가는 효과 */
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    @keyframes zoomIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    
     @keyframes shine {
       0% {
         background-position: -100% 0;
@@ -74,179 +85,22 @@ body {
       100% { background-position: 0% 50%; }
     }
     
-    /* 매우 미세하게 숨쉬는 효과를 위한 애니메이션 */
     @keyframes verySubtleBreathing {
       0% { opacity: 0.95; transform: scale(1); }
       50% { opacity: 1; transform: scale(1.01); } /* 크기 변화 매우 미세하게 */
       100% { opacity: 0.95; transform: scale(1); }
     }
-/* 추가 애니메이션 정의 */
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-/* 추가 애니메이션 정의 */
-@keyframes slideInRight {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes zoomIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-15px); }
-  60% { transform: translateY(-7px); }
-}
-
-@keyframes floatingCard {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-  100% { transform: translateY(0); }
-}
-
-@keyframes staggerFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* 로고 점 효과 */
-.logo span {
-  color: var(--accent); /* 로고의 점만 핑크색 */
-  transition: all 0.3s ease;
-}
-
-.logo:hover span {
-  transform: scale(1.2);
-}
-
-/* 네비게이션 활성 메뉴 효과 강화 */
-.main-nav ul li a.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--primary);
-  animation: slideInRight 0.5s ease;
-}
-
-/* 검색 버튼 효과 */
-.search-btn:hover {
-  background-color: var(--primary-dark);
-  transform: rotate(90deg);
-}
-
-.search-btn svg {
-  transition: all 0.3s ease;
-}
-
-.search-btn:hover svg {
-  transform: scale(1.2);
-}
-
-/* 카드 및 아이템 효과 */
-.post-card, .image-item, .feed-item, .event-item, .topic-item, .release-item {
-  position: relative;
-  overflow: hidden;
-}
-
-/* 빛 지나가는 효과를 위한 가상 요소 */
-.post-card::before, .image-item::before, .topic-item::before, .event-item::before, .release-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transform: translateX(-100%);
-  transition: all 0.5s ease;
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* 호버 시 빛 효과 애니메이션 */
-.post-card:hover::before, .image-item:hover::before, .topic-item:hover::before, .event-item:hover::before, .release-item:hover::before {
-  transform: translateX(100%);
-}
-
-/* 플로팅 효과가 있는 카드 (인기 게시물에 적용) */
-.post-card:nth-child(1) {
-  animation: floatingCard 6s infinite ease-in-out;
-}
-
-.post-card:nth-child(2) {
-  animation: floatingCard 7s infinite ease-in-out;
-  animation-delay: 0.5s;
-}
-
-.post-card:nth-child(3) {
-  animation: floatingCard 5s infinite ease-in-out;
-  animation-delay: 1s;
-}
-
-/* 인기 토픽 순위 호버 효과 */
-.topic-rank {
-  transition: all 0.3s ease;
-}
-
-.topic-item:hover .topic-rank {
-  transform: scale(1.2);
-}
-
-/* 행사 캘린더 날짜 효과 */
-.event-date {
-  transition: all 0.3s ease;
-}
-
-.event-item:hover .event-date {
-  transform: scale(1.1) rotate(3deg);
-}
-
-/* 푸터 섹션 효과 */
-.footer-section h3::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 40px;
-  height: 2px;
-  background-color: var(--accent);
-  transition: all 0.3s ease;
-}
-
-.footer-section:hover h3::after {
-  width: 100%;
-}
-
-/* 푸터 상단 그라데이션 효과 */
-footer {
-  position: relative;
-  overflow: hidden;
-}
-
-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
-  background-size: 200% 100%;
-  animation: gradientShift 10s ease infinite;
-}
+    
+    @keyframes floatingCard {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0); }
+    }
+    
+    @keyframes staggerFadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     
     /* 헤더 - 건스타 스타일 */
     header {
@@ -264,6 +118,7 @@ footer::before {
       justify-content: space-between;
       align-items: center;
       margin-bottom: 15px;
+      flex-wrap: wrap;
     }
     
     .logo {
@@ -282,6 +137,11 @@ footer::before {
     
     .logo span {
       color: var(--accent); /* 로고의 점만 핑크색 */
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover span {
+      transform: scale(1.2);
     }
     
     /* 사용자 액션 버튼 */
@@ -296,6 +156,10 @@ footer::before {
       font-size: 14px;
       font-weight: 500;
       transition: all 0.3s ease;
+      min-height: 44px; /* 터치 디바이스 최소 높이 */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .login-btn {
@@ -306,10 +170,25 @@ footer::before {
     .signup-btn {
       background-color: #333;
       color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .signup-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+      transform: rotate(45deg);
+      animation: shine 3s infinite;
     }
     
     .login-btn:hover {
       background-color: #e5e5e5;
+      transform: translateY(-3px);
     }
     
     .signup-btn:hover {
@@ -333,13 +212,15 @@ footer::before {
     }
     
     .main-nav ul li a {
-      display: block;
+      display: flex;
+      align-items: center;
       padding: 15px 20px;
       font-size: 15px;
       font-weight: 500;
       color: #333;
       transition: all 0.2s ease;
       position: relative;
+      min-height: 44px; /* 터치 디바이스 최소 높이 */
     }
     
     .main-nav ul li a:hover {
@@ -359,6 +240,7 @@ footer::before {
       width: 100%;
       height: 3px;
       background-color: var(--primary);
+      animation: slideInRight 0.5s ease;
     }
     
     /* 검색창 */
@@ -397,48 +279,53 @@ footer::before {
       text-align: center;
     }
     
-    .search-box {
-      position: relative;
-      max-width: 600px;
-      margin: 20px auto 0;
-      animation: fadeIn 1s ease-out;
-    }
+.search-box {
+  position: relative;
+  max-width: 600px;
+  margin: 20px auto 0;
+  animation: fadeIn 1s ease-out;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 20px;
+  padding-right: 50px; /* 버튼 공간 충분히 확보 */
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  min-height: 44px;
+}
+
+.search-btn {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-50%) rotate(90deg);
+}
     
-    .search-input {
-      width: 100%;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 30px;
-      font-size: 14px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    .search-btn svg {
       transition: all 0.3s ease;
     }
     
-    .search-input:focus {
-      outline: none;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
-      transform: translateY(-2px);
-    }
-    
-    .search-btn {
-      position: absolute;
-      right: 5px;
-      top: 5px;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-    
-    .search-btn:hover {
-      background-color: var(--primary-dark);
+    .search-btn:hover svg {
+      transform: scale(1.2);
     }
     
     .keywords {
@@ -458,6 +345,9 @@ footer::before {
       font-size: 12px;
       transition: all 0.3s ease;
       cursor: pointer;
+      min-height: 30px; /* 터치 디바이스 최소 높이 */
+      display: inline-flex;
+      align-items: center;
     }
     
     .keyword-badge:hover {
@@ -471,11 +361,11 @@ footer::before {
     }
     
     /* 섹션 공통 스타일 */
-section {
-  margin: 25px 0;
-  padding: 0;
-  animation: fadeIn 0.8s ease-out;
-}
+    section {
+      margin: 25px 0;
+      padding: 0;
+      animation: fadeIn 0.8s ease-out;
+    }
     
     .section-title {
       font-size: 18px;
@@ -487,12 +377,16 @@ section {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
     
     .view-more {
       font-size: 13px;
       color: var(--primary);
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      min-height: 30px; /* 터치 디바이스 최소 높이 */
     }
     
     .view-more:hover {
@@ -514,6 +408,52 @@ section {
       box-shadow: var(--card-shadow);
       transition: all 0.3s ease;
       border: 1px solid var(--border-color);
+      max-width: 100%;
+      position: relative;
+    }
+    
+    /* 카드 플로팅 효과 */
+    .post-card:nth-child(1) {
+      animation: floatingCard 6s infinite ease-in-out;
+    }
+    
+    .post-card:nth-child(2) {
+      animation: floatingCard 7s infinite ease-in-out;
+      animation-delay: 0.5s;
+    }
+    
+    .post-card:nth-child(3) {
+      animation: floatingCard 5s infinite ease-in-out;
+      animation-delay: 1s;
+    }
+    
+    /* 빛 지나가는 효과 */
+    .post-card::before, 
+    .image-item::before, 
+    .topic-item::before, 
+    .event-item::before, 
+    .release-item::before,
+    .feed-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: all 0.5s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .post-card:hover::before, 
+    .image-item:hover::before, 
+    .topic-item:hover::before, 
+    .event-item:hover::before, 
+    .release-item:hover::before,
+    .feed-item:hover::before {
+      transform: translateX(100%);
     }
     
     .post-card:hover {
@@ -522,11 +462,14 @@ section {
     }
     
     .post-image {
-      height: 180px;
+      height: 0;
+      padding-bottom: 56.25%; /* 16:9 비율 유지 */
       background-position: center;
       background-size: cover;
       background-color: #f5f5f5;
       transition: all 0.5s ease;
+      position: relative;
+      max-width: 100%;
     }
     
     .post-card:hover .post-image {
@@ -554,6 +497,7 @@ section {
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      word-wrap: break-word;
     }
     
     .post-meta {
@@ -561,6 +505,11 @@ section {
       color: #777;
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    
+    .post-meta span {
+      margin-bottom: 4px;
     }
     
     /* 분기 애니메이션 섹션 */
@@ -588,6 +537,10 @@ section {
       white-space: nowrap;
       transition: all 0.3s ease;
       color: #666;
+      min-height: 36px; /* 터치 디바이스 최소 높이 */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .filter-btn:hover {
@@ -641,6 +594,7 @@ section {
       height: 100%;
       object-fit: cover;
       transition: all 0.5s ease;
+      max-width: 100%;
     }
     
     .image-item:hover img {
@@ -679,6 +633,8 @@ section {
       padding: 8px 0;
       border-bottom: 1px solid var(--border-color);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .feed-item:hover {
@@ -695,6 +651,7 @@ section {
       font-weight: 500;
       margin-bottom: 4px;
       font-size: 13px;
+      word-wrap: break-word;
     }
     
     .feed-item:hover .feed-title {
@@ -704,6 +661,9 @@ section {
     .feed-meta {
       font-size: 11px;
       color: #777;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
     }
     
     /* 행사 캘린더 */
@@ -722,6 +682,8 @@ section {
       padding: 8px 0;
       border-bottom: 1px solid var(--border-color);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .event-item:hover {
@@ -746,6 +708,11 @@ section {
       align-items: center;
       margin-right: 12px;
       flex-shrink: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .event-item:hover .event-date {
+      transform: scale(1.1) rotate(3deg);
     }
     
     .event-day {
@@ -761,12 +728,15 @@ section {
     
     .event-info {
       flex: 1;
+      min-width: 0; /* 텍스트 오버플로우 방지 */
     }
     
     .event-title {
       font-weight: 500;
       margin-bottom: 3px;
       font-size: 13px;
+      word-wrap: break-word;
+      white-space: normal;
     }
     
     .event-item:hover .event-title {
@@ -776,6 +746,7 @@ section {
     .event-location {
       font-size: 11px;
       color: #777;
+      word-wrap: break-word;
     }
     
     /* 오늘의 인기 토픽 섹션 */
@@ -794,6 +765,8 @@ section {
       padding: 10px 0;
       border-bottom: 1px solid var(--border-color);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .topic-item:hover {
@@ -813,16 +786,24 @@ section {
       margin-right: 12px;
       min-width: 25px;
       text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .topic-item:hover .topic-rank {
+      transform: scale(1.2);
     }
     
     .topic-info {
       flex: 1;
+      min-width: 0; /* 텍스트 오버플로우 방지 */
     }
     
     .topic-title {
       font-weight: 500;
       font-size: 13px;
       margin-bottom: 2px;
+      word-wrap: break-word;
+      white-space: normal;
     }
     
     .topic-item:hover .topic-title {
@@ -832,6 +813,7 @@ section {
     .topic-meta {
       font-size: 11px;
       color: #777;
+      word-wrap: break-word;
     }
     
     .topic-heat {
@@ -840,6 +822,8 @@ section {
       color: #FF5252;
       display: flex;
       align-items: center;
+      margin-left: 8px;
+      white-space: nowrap;
     }
     
     .topic-heat .icon {
@@ -862,6 +846,8 @@ section {
       padding: 8px 0;
       border-bottom: 1px solid var(--border-color);
       transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     
     .release-item:hover {
@@ -882,6 +868,7 @@ section {
       flex-shrink: 0;
       border-radius: 2px;
       overflow: hidden;
+      transition: all 0.3s ease;
     }
     
     .release-item:hover .release-cover {
@@ -892,16 +879,19 @@ section {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      max-width: 100%;
     }
     
     .release-info {
       flex: 1;
+      min-width: 0; /* 텍스트 오버플로우 방지 */
     }
     
     .release-title {
       font-weight: 500;
       font-size: 13px;
       margin-bottom: 2px;
+      word-wrap: break-word;
     }
     
     .release-item:hover .release-title {
@@ -912,6 +902,7 @@ section {
       font-size: 11px;
       color: #777;
       margin-bottom: 2px;
+      word-wrap: break-word;
     }
     
     .release-date {
@@ -928,6 +919,31 @@ section {
       margin-top: 40px;
       font-size: 13px;
       border-top: 1px solid #E0E0E0;
+      position: relative;
+      overflow: hidden;
+    }
+    /* 푸터 */
+    footer {
+      background-color: var(--dark-bg);
+      color: var(--light-text);
+      padding: 30px 0;
+      margin-top: 40px;
+      font-size: 13px;
+      border-top: 1px solid #E0E0E0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+      background-size: 200% 100%;
+      animation: gradientShift 10s ease infinite;
     }
     
     .footer-content {
@@ -936,10 +952,27 @@ section {
       gap: 25px;
     }
     
-    .footer-section h3 {
-      margin-bottom: 12px;
-      color: var(--primary-dark);
-      font-size: 16px;
+   .footer-section h3 {
+  margin-bottom: 12px;
+  color: var(--primary-dark);
+  font-size: 16px;
+  position: relative;
+  display: inline-block; /* 텍스트 너비만큼만 차지하도록 설정 */
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 40px; /* 초기 너비 */
+  height: 2px;
+  background-color: var(--accent);
+  transition: all 0.3s ease;
+}
+    
+    .footer-section:hover h3::after {
+      width: 100%;
     }
     
     .footer-section ul {
@@ -953,13 +986,16 @@ section {
     .footer-section ul li a {
       opacity: 0.8;
       transition: all 0.3s ease;
+      display: inline-block;
+      min-height: 30px;
+      display: flex;
+      align-items: center;
     }
     
     .footer-section ul li a:hover {
       opacity: 1;
       color: var(--primary);
       transform: translateX(3px);
-      display: inline-block;
     }
     
     .footer-bottom {
@@ -972,34 +1008,32 @@ section {
     }
     
     /* 그리드 레이아웃 */
-.grid-layout {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  margin-top: 20px;
-}
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
     
     /* 반응형 설계 */
     @media (max-width: 900px) {
       .anime-list {
         grid-template-columns: repeat(3, 1fr); /* 중간 화면에서 3열 */
       }
+      
+      .popular-posts {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
     }
     
     @media (max-width: 768px) {
-      .grid-layout {
-        grid-template-columns: 1fr;
-      }
-      
-      .popular-posts,
-      .anime-list,
-      .community-images {
-        grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
-      }
-      
       .header-container {
         flex-direction: column;
         align-items: center;
+      }
+      
+      .logo {
+        margin-bottom: 10px;
       }
       
       .user-actions {
@@ -1021,12 +1055,101 @@ section {
         padding: 12px 15px;
         white-space: nowrap;
       }
+      
+      .grid-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .popular-posts,
+      .anime-list,
+      .community-images {
+        grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+      }
+      
+      .search-container h1 {
+        font-size: 22px;
+      }
+      
+      .search-container p {
+        font-size: 14px;
+      }
+      
+      .filter-btn, .keyword-badge {
+        padding: 4px 10px;
+        font-size: 11px;
+      }
+      
+      .topic-heat {
+        display: none; /* 모바일에서는 히트 표시 숨김 */
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr); /* 모바일에서는 2열로 */
+      }
     }
     
     @media (max-width: 600px) {
       .anime-list {
         grid-template-columns: repeat(2, 1fr); /* 작은 화면에서 2열 */
       }
+      
+      .popular-posts {
+        grid-template-columns: 1fr; /* 모바일에서는 한 열로 */
+        gap: 15px;
+      }
+      
+      .community-images {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .section-title {
+        font-size: 16px;
+      }
+      
+      .post-title, .anime-title {
+        font-size: 14px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr; /* 초소형 화면에서는 1열로 */
+      }
+      
+      .event-date {
+        width: 35px;
+        height: 35px;
+        margin-right: 8px;
+      }
+      
+      .event-day {
+        font-size: 14px;
+      }
+      
+      .event-month {
+        font-size: 10px;
+      }
+      
+      .search-input {
+        padding: 10px 15px;
+      }
+      
+      .search-btn {
+  position: absolute;
+  right: 5px; /* 오른쪽 여백 유지 */
+  top: 50%; /* 중앙 배치 */
+  transform: translateY(-50%); /* 수직 중앙 정렬 */
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 34px; /* 크기 조정 (44px → 34px) */
+  height: 34px; /* 크기 조정 (44px → 34px) */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
@@ -1035,9 +1158,9 @@ section {
   <!-- 헤더 -->
   <header>
     <div class="container header-container">
-<div class="logo">
-  <a href="index.html">HONMONO<span>.</span></a>
-</div>
+      <div class="logo">
+        <a href="index.html">HONMONO<span>.</span></a>
+      </div>
       <div class="user-actions">
         <a href="#" class="login-btn">로그인</a>
         <a href="#" class="signup-btn">신규 등록</a>
@@ -1045,16 +1168,16 @@ section {
     </div>
     <div class="navigation-container">
       <div class="container">
-<nav class="main-nav">
-  <ul>
-    <li><a href="index.html" class="active">홈</a></li>
-    <li><a href="anime.html">애니메이션</a></li>
-    <li><a href="gundam.html">건담</a></li>
-    <li><a href="vrchat.html">VRChat</a></li>
-    <li><a href="travel.html">일본여행</a></li>
-    <li><a href="events.html">행사정보</a></li>
-  </ul>
-</nav>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html" class="active">홈</a></li>
+            <li><a href="anime.html">애니메이션</a></li>
+            <li><a href="gundam.html">건담</a></li>
+            <li><a href="vrchat.html">VRChat</a></li>
+            <li><a href="travel.html">일본여행</a></li>
+            <li><a href="events.html">행사정보</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
   </header>
@@ -1064,12 +1187,12 @@ section {
     <div class="container">
       <h1>진짜 이야기가 살아숨쉬는 공간</h1>
       <p>당신의 Honest Monologue를 시작하세요</p>
-      <div class="search-box">
-        <input type="text" class="search-input" placeholder="관심있는 키워드를 검색해보세요">
-        <button class="search-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-          </svg>
+      <div class="search-box" onsubmit="event.preventDefault(); alert('검색 기능은 아직 준비 중입니다!');">
+  <input type="text" class="search-input" placeholder="관심있는 키워드를 검색해보세요">
+  <button type="submit" class="search-btn">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+    </svg>
         </button>
         <div class="keywords">
           <span class="keyword-badge">짱구는못말려</span>
@@ -1094,7 +1217,7 @@ section {
       </div>
       <div class="popular-posts">
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <div class="post-category">애니메이션</div>
             <h3 class="post-title">2025년 봄 애니 중 꼭 봐야할 작품 TOP5</h3>
@@ -1105,7 +1228,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <div class="post-category">건담</div>
             <h3 class="post-title">RG 유니콘 건담 퍼펙티빌리티 개조기</h3>
@@ -1116,7 +1239,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <div class="post-category">VRChat</div>
             <h3 class="post-title">VRC 신규 아바타 시스템 가이드 2025</h3>
@@ -1144,7 +1267,7 @@ section {
       </div>
       <div class="anime-list">
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">하이큐!! 최종시즌</h3>
             <div class="post-meta">
@@ -1154,7 +1277,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">소드 아트 온라인: 유니탈 링</h3>
             <div class="post-meta">
@@ -1164,7 +1287,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">체인소 맨 2부</h3>
             <div class="post-meta">
@@ -1174,7 +1297,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">원피스 리마스터</h3>
             <div class="post-meta">
@@ -1185,7 +1308,7 @@ section {
         </div>
         <!-- 추가된 애니메이션 아이템 (총 8개가 되도록) -->
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">블루 록 시즌 2</h3>
             <div class="post-meta">
@@ -1195,7 +1318,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">귀멸의 칼날: 나비저택편</h3>
             <div class="post-meta">
@@ -1205,7 +1328,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">나의 히어로 아카데미아 최종시즌</h3>
             <div class="post-meta">
@@ -1215,7 +1338,7 @@ section {
           </div>
         </div>
         <div class="post-card">
-          <div class="post-image" style="background-image: url('/api/placeholder/400/320');"></div>
+          <div class="post-image" style="background-image: url('https://via.placeholder.com/400x320');"></div>
           <div class="post-content">
             <h3 class="post-title">오버로드 5기</h3>
             <div class="post-meta">
@@ -1237,27 +1360,27 @@ section {
           </div>
           <div class="community-images">
             <div class="image-item">
-              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <img src="https://via.placeholder.com/400x400" alt="커뮤니티 이미지">
               <div class="image-info">건담 # RX-78-2</div>
             </div>
             <div class="image-item">
-              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <img src="https://via.placeholder.com/400x400" alt="커뮤니티 이미지">
               <div class="image-info">애니 # 하이큐</div>
             </div>
             <div class="image-item">
-              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <img src="https://via.placeholder.com/400x400" alt="커뮤니티 이미지">
               <div class="image-info">VRC # 아바타</div>
             </div>
             <div class="image-item">
-              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <img src="https://via.placeholder.com/400x400" alt="커뮤니티 이미지">
               <div class="image-info">건담 # 프리덤</div>
             </div>
             <div class="image-item">
-              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <img src="https://via.placeholder.com/400x400" alt="커뮤니티 이미지">
               <div class="image-info">애니 # 스파이패밀리</div>
             </div>
             <div class="image-item">
-              <img src="/api/placeholder/400/400" alt="커뮤니티 이미지">
+              <img src="https://via.placeholder.com/400x400" alt="커뮤니티 이미지">
               <div class="image-info">VRC # 월드</div>
             </div>
           </div>
@@ -1450,7 +1573,7 @@ section {
           <div class="new-releases">
             <div class="release-item">
               <div class="release-cover">
-                <img src="/api/placeholder/120/160" alt="책 표지">
+                <img src="https://via.placeholder.com/120x160" alt="책 표지">
               </div>
               <div class="release-info">
                 <div class="release-title">체인소 맨 12권</div>
@@ -1460,7 +1583,7 @@ section {
             </div>
             <div class="release-item">
               <div class="release-cover">
-                <img src="/api/placeholder/120/160" alt="책 표지">
+                <img src="https://via.placeholder.com/120x160" alt="책 표지">
               </div>
               <div class="release-info">
                 <div class="release-title">하이큐!! 완전판 5권</div>
@@ -1470,7 +1593,7 @@ section {
             </div>
             <div class="release-item">
               <div class="release-cover">
-                <img src="/api/placeholder/120/160" alt="책 표지">
+                <img src="https://via.placeholder.com/120x160" alt="책 표지">
               </div>
               <div class="release-info">
                 <div class="release-title">건담 The Origin 특별판</div>
@@ -1480,7 +1603,7 @@ section {
             </div>
             <div class="release-item">
               <div class="release-cover">
-                <img src="/api/placeholder/120/160" alt="책 표지">
+                <img src="https://via.placeholder.com/120x160" alt="책 표지">
               </div>
               <div class="release-info">
                 <div class="release-title">스파이 패밀리 11권</div>
@@ -1536,96 +1659,215 @@ section {
       </div>
     </div>
   </footer>
-  
-  <!-- 자바스크립트 - 효과 최소화 -->
-<!-- 자바스크립트 - 향상된 효과 -->
-<script>
-  // 필터 버튼 활성화 기능 + 추가 효과
-  document.addEventListener('DOMContentLoaded', function() {
-// 필터 버튼 활성화 기능 + 추가 효과
-document.addEventListener('DOMContentLoaded', function() {
-  // 기존 필터 버튼 기능
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-  
-  // 애니메이션 카드에 인덱스 설정하여 시차 애니메이션 적용
-  const cards = document.querySelectorAll('.post-card, .image-item');
-  cards.forEach((card, index) => {
-    card.style.setProperty('--card-index', index % 8); // 8개 단위로 반복
-    card.style.animationDelay = `${index * 0.1}s`;
-    card.style.opacity = '0';
-    card.style.animation = `staggerFadeIn 0.5s ease forwards ${index * 0.1}s`;
-  });
-  
-  // 피드 아이템 애니메이션
-  const feedItems = document.querySelectorAll('.feed-item, .topic-item, .event-item, .release-item');
-  feedItems.forEach((item, index) => {
-    item.style.setProperty('--item-index', index % 10);
-    item.style.opacity = '0';
-    item.style.animation = `slideInLeft 0.5s ease forwards ${index * 0.05}s`;
-  });
-  
-  // 스크롤 이벤트에 따른 애니메이션 효과
-  const animateOnScroll = () => {
-    const elements = document.querySelectorAll('.section-title, .popular-posts, .anime-list, .community-images, .activity-feed, .event-calendar, .hot-topics, .new-releases');
-    
-    elements.forEach(el => {
-      const elementTop = el.getBoundingClientRect().top;
-      const elementBottom = el.getBoundingClientRect().bottom;
-      const isVisible = (elementTop < window.innerHeight - 50) && (elementBottom > 0);
+  <!-- 자바스크립트 - 효과 추가 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // 애니메이션 카드 및 이미지 아이템에 시차 애니메이션 적용
+      const cards = document.querySelectorAll('.post-card, .image-item');
+      cards.forEach((card, index) => {
+        card.style.setProperty('--card-index', index % 12);
+        setTimeout(() => {
+          card.style.opacity = '1';
+        }, index * 100);
+      });
       
-      if (isVisible && !el.classList.contains('animated')) {
-        el.classList.add('animated');
+      // 피드 아이템, 토픽 아이템, 이벤트 아이템에 시차 애니메이션 적용
+      const listItems = document.querySelectorAll('.feed-item, .topic-item, .event-item, .release-item');
+      listItems.forEach((item, index) => {
+        item.style.setProperty('--item-index', index % 10);
+        setTimeout(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateX(0)';
+        }, 500 + index * 50);
+      });
+      
+      // 필터 버튼 활성화 기능
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          // 클릭 효과 추가
+          this.style.transform = 'scale(1.05)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 200);
+        });
+      });
+      
+      // 키워드 배지 클릭 효과
+      document.querySelectorAll('.keyword-badge').forEach(badge => {
+        badge.addEventListener('click', function() {
+          const searchInput = document.querySelector('.search-input');
+          if(searchInput) {
+            searchInput.value = this.textContent;
+            searchInput.focus();
+          }
+          
+          // 클릭 효과
+          this.style.transform = 'scale(1.1) translateY(-2px)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 200);
+        });
+      });
+      
+      // 검색창 포커스 효과
+      const searchInput = document.querySelector('.search-input');
+      if(searchInput) {
+        searchInput.addEventListener('focus', function() {
+          const searchBox = this.closest('.search-box');
+          if(searchBox) {
+            searchBox.style.transform = 'translateY(-3px)';
+            searchBox.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+          }
+        });
         
-        if (el.classList.contains('section-title')) {
-          el.style.animation = 'slideInLeft 0.6s ease forwards';
-        } else {
-          el.style.animation = 'fadeIn 0.8s ease forwards';
-        }
+        searchInput.addEventListener('blur', function() {
+          const searchBox = this.closest('.search-box');
+          if(searchBox) {
+            searchBox.style.transform = '';
+            searchBox.style.boxShadow = '';
+          }
+        });
       }
-    });
-  };
-  
-  // 초기 로드 시 애니메이션 실행
-  animateOnScroll();
-  
-  // 스크롤 이벤트 리스너 추가
-  window.addEventListener('scroll', animateOnScroll);
-  
-  // 검색창 포커스 효과
-  const searchInput = document.querySelector('.search-input');
-  if (searchInput) {
-    searchInput.addEventListener('focus', function() {
-      this.style.transform = 'translateY(-2px)';
-      this.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.15)';
-    });
-    
-    searchInput.addEventListener('blur', function() {
-      this.style.transform = '';
-      this.style.boxShadow = '';
-    });
-  }
-  
-  // 키워드 배지 클릭 효과
-  document.querySelectorAll('.keyword-badge').forEach(badge => {
-    badge.addEventListener('click', function() {
-      this.style.transform = 'scale(1.1)';
-      setTimeout(() => {
-        this.style.transform = '';
-      }, 300);
       
-      if (searchInput) {
-        searchInput.value = this.textContent;
-        searchInput.focus();
+      // 스크롤 이벤트에 따른 애니메이션 효과
+      const animateOnScroll = () => {
+        const sections = document.querySelectorAll('section');
+        
+        sections.forEach(section => {
+          const sectionTop = section.getBoundingClientRect().top;
+          const sectionBottom = section.getBoundingClientRect().bottom;
+          const isVisible = (sectionTop < window.innerHeight - 100) && (sectionBottom > 0);
+          
+          if (isVisible && !section.classList.contains('animated')) {
+            section.classList.add('animated');
+            
+            // 섹션 내부 요소들 애니메이션
+            const title = section.querySelector('.section-title');
+            if(title) {
+              title.style.opacity = '0';
+              title.style.transform = 'translateX(-20px)';
+              setTimeout(() => {
+                title.style.transition = 'all 0.6s ease';
+                title.style.opacity = '1';
+                title.style.transform = 'translateX(0)';
+              }, 100);
+            }
+            
+            // 섹션 내 카드 요소들 애니메이션
+            const items = section.querySelectorAll('.post-card, .image-item, .feed-item, .topic-item, .event-item, .release-item');
+            items.forEach((item, index) => {
+              item.style.opacity = '0';
+              item.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                item.style.transition = 'all 0.5s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+              }, 200 + index * 50);
+            });
+          }
+        });
+      };
+      
+      // 초기 로드 시 애니메이션 실행
+      setTimeout(animateOnScroll, 500);
+      
+      // 스크롤 이벤트 리스너 추가
+      window.addEventListener('scroll', animateOnScroll);
+      
+      // 링크 효과
+      document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('mouseenter', function() {
+          if(!this.querySelector('.logo')) { // 로고 링크는 제외
+            this.style.transition = 'all 0.3s ease';
+          }
+        });
+      });
+      
+      // 이미지 지연 로딩
+      const lazyLoadImages = () => {
+        const images = document.querySelectorAll('.post-image, .image-item img, .release-cover img');
+        
+        images.forEach(img => {
+          // 이미지가 뷰포트에 들어왔는지 확인
+          const rect = img.getBoundingClientRect();
+          const isInViewport = (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+          
+          // 뷰포트에 있으면 배경 이미지나 이미지 소스 로드
+          if(isInViewport) {
+            if(img.classList.contains('post-image')) {
+              img.style.backgroundImage = img.getAttribute('data-src') || img.style.backgroundImage;
+            } else {
+              img.src = img.getAttribute('data-src') || img.src;
+            }
+            
+            // 이미지가 로드되면 애니메이션 적용
+            img.classList.add('loaded');
+          }
+        });
+      };
+      
+      // 초기 이미지 로딩
+      setTimeout(lazyLoadImages, 300);
+      
+      // 스크롤 시 이미지 로딩
+      window.addEventListener('scroll', lazyLoadImages);
+      
+      // 모바일에서 터치 효과 추가
+      const addTouchEffects = () => {
+        const touchableElements = document.querySelectorAll('.post-card, .image-item, .feed-item, .topic-item, .event-item, .release-item, .filter-btn, .keyword-badge, .login-btn, .signup-btn');
+        
+        touchableElements.forEach(el => {
+          el.addEventListener('touchstart', function() {
+            this.style.transition = 'all 0.3s ease';
+            this.style.transform = 'scale(0.98)';
+          });
+          
+          el.addEventListener('touchend', function() {
+            this.style.transform = '';
+          });
+        });
+      };
+      
+      // 모바일 터치 효과 적용
+      if('ontouchstart' in window) {
+        addTouchEffects();
+      }
+      
+      // 푸터 애니메이션
+      const footer = document.querySelector('footer');
+      if(footer) {
+        window.addEventListener('scroll', function() {
+          const footerTop = footer.getBoundingClientRect().top;
+          const isVisible = footerTop < window.innerHeight;
+          
+          if(isVisible && !footer.classList.contains('animated')) {
+            footer.classList.add('animated');
+            
+            // 푸터 내 요소 애니메이션
+            const sections = footer.querySelectorAll('.footer-section');
+            sections.forEach((section, index) => {
+              section.style.opacity = '0';
+              section.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                section.style.transition = 'all 0.5s ease';
+                section.style.opacity = '1';
+                section.style.transform = 'translateY(0)';
+              }, 100 + index * 100);
+            });
+          }
+        });
       }
     });
-  });
-});
-  });
-</script>
+  </script>
 </body>
 </html>
+
+   
