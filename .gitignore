@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor directories and swap files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
