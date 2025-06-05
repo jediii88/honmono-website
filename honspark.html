@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>혼스파크 평가</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen p-4">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [title, setTitle] = useState('');
+      const [rating, setRating] = useState(5);
+      const [comment, setComment] = useState('');
+      const [user, setUser] = useState('');
+      const [evaluations, setEvaluations] = useState([]);
+      const [search, setSearch] = useState('');
+
+      // Load from localStorage
+      useEffect(() => {
+        const saved = localStorage.getItem('honspark-data');
+        if (saved) {
+          setEvaluations(JSON.parse(saved));
+        }
+      }, []);
+
+      // Save to localStorage
+      useEffect(() => {
+        localStorage.setItem('honspark-data', JSON.stringify(evaluations));
+      }, [evaluations]);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!title.trim() || !user.trim()) return;
+        const newEval = {
+          id: Date.now(),
+          title: title.trim(),
+          rating: Number(rating),
+          comment: comment.trim(),
+          user: user.trim(),
+          time: new Date().toISOString()
+        };
+        setEvaluations([...evaluations, newEval]);
+        setTitle('');
+        setRating(5);
+        setComment('');
+        // keep user
+      };
+
+      // Average ratings map
+      const avgMap = evaluations.reduce((acc, cur) => {
+        if (!acc[cur.title]) acc[cur.title] = { total: 0, count: 0 };
+        acc[cur.title].total += cur.rating;
+        acc[cur.title].count += 1;
+        return acc;
+      }, {});
+
+      const getAverage = (title) => {
+        const data = avgMap[title];
+        return data ? (data.total / data.count).toFixed(1) : '0';
+      };
+
+      const displayed = evaluations
+        .filter(ev => ev.title.toLowerCase().includes(search.toLowerCase()))
+        .map(ev => ({ ...ev, avg: parseFloat(getAverage(ev.title)) }))
+        .sort((a, b) => b.avg - a.avg);
+
+      return (
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-3xl font-bold mb-6 text-center">혼스파크 평가</h1>
+
+          <form onSubmit={handleSubmit} className="bg-gray-800 p-4 rounded-lg shadow mb-8 space-y-4">
+            <input
+              type="text"
+              placeholder="작품 제목"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              className="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
+            />
+            <div>
+              <label className="block mb-1">평점: {rating}</label>
+              <input
+                type="range"
+                min="1"
+                max="10"
+                value={rating}
+                onChange={e => setRating(e.target.value)}
+                className="w-full"
+              />
+            </div>
+            <textarea
+              placeholder="짧은 감상평"
+              value={comment}
+              onChange={e => setComment(e.target.value)}
+              className="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
+            ></textarea>
+            <input
+              type="text"
+              placeholder="닉네임"
+              value={user}
+              onChange={e => setUser(e.target.value)}
+              className="w-full p-2 rounded bg-gray-700 text-white focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="w-full py-2 bg-gradient-to-r from-green-500 via-red-500 to-blue-500 text-white rounded font-semibold"
+            >
+              평가 등록
+            </button>
+          </form>
+
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder="제목 검색"
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full p-2 rounded bg-gray-800 focus:outline-none"
+            />
+          </div>
+
+          <div className="space-y-4">
+            {displayed.map(ev => (
+              <div key={ev.id} className="bg-gray-800 rounded-lg p-4 shadow">
+                <div className="flex justify-between items-center mb-2">
+                  <h2 className="text-xl font-semibold">{ev.title}</h2>
+                  <span className="text-yellow-400">평균 {getAverage(ev.title)}</span>
+                </div>
+                <p className="mb-1">평점 {ev.rating}/10 - {ev.comment}</p>
+                <div className="text-sm text-gray-400">
+                  by {ev.user} • {new Date(ev.time).toLocaleString()}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
+
